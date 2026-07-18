@@ -6,7 +6,7 @@ export default defineConfig({
   },
 });
 import {
-  defineConfig,
+  
   envField,
   fontProviders,
   svgoOptimizer,
