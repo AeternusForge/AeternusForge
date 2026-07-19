@@ -1,138 +1,121 @@
 ---
-import { getCollection } from "astro:content";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import IconRss from "@/assets/icons/IconRss.svg";
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
-import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
-import Card from "@/components/Card.astro";
-import LinkButton from "@/components/LinkButton.astro";
-import { getSortedPosts } from "@/utils/getSortedPosts";
-import { useTranslations } from "@/i18n";
-import config from "@/config";
-
-const { socials, posts: postsConfig } = config;
-
-const locale = Astro.currentLocale ?? config.site.lang;
-const t = useTranslations(locale);
-
-const posts = await getCollection("posts");
-const sortedPosts = getSortedPosts(posts);
-const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
-const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
-const homePath = getRelativeLocaleUrl(locale, "");
+// Coming Soon splash for AeternusForge.
+// This temporarily replaces the homepage. To GO LIVE later, revert the commit
+// that added this (GitHub > Commits > this commit > Revert) — that restores your
+// real homepage. This page is fully self-contained on purpose (no theme imports),
+// so it cannot break your build.
 ---
 
-<Layout>
-  <Header />
-  <main
-    id="main-content"
-    data-layout="index"
-    data-home-path={homePath}
-    class="app-layout"
-  >
-    <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Mingalaba
-      </h1>
-      <a
-        target="_blank"
-        href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
-        class="inline-block"
-        aria-label="RSS Feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
-
-      <p>
-        AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro
-        blog theme. This theme follows best practices and provides accessibility
-        out of the box. Light and dark mode are supported by default. Moreover,
-        additional color schemes can also be configured.
-      </p>
-      <p class="mt-2">
-        Read the blog posts or check{" "}
-        <LinkButton
-          class="hover:text-accent underline decoration-dashed underline-offset-4"
-          href="https://github.com/satnaing/astro-paper#readme"
-        >
-          README
-        </LinkButton>{" "}
-        for more info.
-      </p>
-      {
-        socials.length > 0 && (
-          <div class="mt-4 flex max-sm:flex-col sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
-              {t.home.socialLinks}:
-            </div>
-            <Socials />
-          </div>
-        )
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AeternusForge — Coming Soon</title>
+    <meta
+      name="description"
+      content="AeternusForge is being forged — project builds, printable files, and honest gear notes, coming soon."
+    />
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0b0f17;
+        --fg: #e6edf3;
+        --accent: #ff7a3c;
+        --muted: #8a94a6;
       }
-    </section>
-
-    {
-      featuredPosts.length > 0 && (
-        <section
-          id="featured"
-          class:list={[
-            "pt-12 pb-6",
-            { "border-border border-b": recentPosts.length > 0 },
-          ]}
-        >
-          <h2 class="text-2xl font-semibold tracking-wide">
-            {t.home.featured}
-          </h2>
-          <ul>
-            {featuredPosts.map(data => (
-              <Card variant="h3" {...data} />
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">
-            {t.home.recentPosts}
-          </h2>
-          <ul>
-            {recentPosts.slice(0, postsConfig.perIndex).map(data => (
-              <Card variant="h3" {...data} />
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    <div class="my-8 text-center">
-      <LinkButton href={getRelativeLocaleUrl(locale, "posts")}>
-        {t.home.allPosts}
-        <IconArrowRight class="inline-block rtl:-rotate-180" />
-      </LinkButton>
-    </div>
-  </main>
-  <Footer />
-</Layout>
-
-<script>
-  document.addEventListener("astro:page-load", () => {
-    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
-      ?.dataset;
-    const baseRoot = import.meta.env.BASE_URL.replace(/\/?$/, "/");
-    if (indexLayout?.layout) {
-      sessionStorage.setItem("backUrl", indexLayout.homePath ?? baseRoot);
-    }
-  });
-</script>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { height: 100%; }
+      body {
+        background: radial-gradient(1200px 600px at 50% -10%, #16202e 0%, var(--bg) 60%);
+        color: var(--fg);
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+        padding: 24px;
+        -webkit-font-smoothing: antialiased;
+      }
+      .scanline {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        box-shadow: 0 0 14px 1px var(--accent);
+      }
+      .eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 22px;
+      }
+      h1 {
+        font-size: clamp(2.4rem, 8vw, 4.5rem);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        line-height: 1;
+      }
+      h1 .spark {
+        color: var(--accent);
+        text-shadow: 0 0 26px rgba(255, 122, 60, 0.55);
+      }
+      .rule {
+        width: 60px;
+        height: 2px;
+        background: var(--accent);
+        margin: 26px auto;
+        opacity: 0.8;
+        box-shadow: 0 0 12px var(--accent);
+      }
+      .status { font-size: 1.05rem; font-weight: 500; letter-spacing: 0.02em; }
+      .tag {
+        margin-top: 14px;
+        color: var(--muted);
+        max-width: 46ch;
+        line-height: 1.6;
+        font-size: 0.98rem;
+      }
+      .contact { margin-top: 34px; font-size: 0.9rem; color: var(--muted); }
+      .contact a { color: var(--accent); text-decoration: none; }
+      .contact a:hover { text-shadow: 0 0 12px rgba(255, 122, 60, 0.5); }
+      footer {
+        position: fixed;
+        bottom: 18px;
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #4b5568;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        h1 .spark { animation: pulse 3.2s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.72; } }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scanline"></div>
+    <div class="eyebrow">Design · Print · Build</div>
+    <h1>Aeternus<span class="spark">Forge</span></h1>
+    <div class="rule"></div>
+    <p class="status">Something is being forged.</p>
+    <p class="tag">
+      A workshop where ideas are formed to last. Project builds, printable
+      files, and honest gear notes — coming soon.
+    </p>
+    <p class="contact">
+      Questions? <a href="mailto:aeternusforge@protonmail.com">aeternusforge@protonmail.com</a>
+    </p>
+    <footer>AeternusForge</footer>
+  </body>
+</html>
